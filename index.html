@@ -1,0 +1,235 @@
+<!DOCTYPE html>  
+<html lang="en">  
+    <head>  
+        <meta charset="utf-8">  
+        <meta name="viewport" content="width=640,user-scalable=no,target-densitydpi = device-dpi"/>  
+        <script src="./libs/jquery.min.js"></script>
+        <script src="./libs/jQueryRotate.2.2.js"></script>
+        <script src="./libs/jquery.easing.min.js"></script>
+        <style>
+        	html{
+        		font-size: 24px;
+        	} 
+     	    body{
+     	    	width: 100%;
+     	    	background-color: #c72222;
+     	    }
+     	    h3{
+     	    	color: white;
+     	    }
+     	    .top{
+     	    	text-align: center;
+    			margin: 2rem;
+     	    }
+     	    .turnplate{
+     	    	position: relative;
+     	    }
+     	    .zp {
+			    width: 80%;
+			    height: 20rem;
+			    margin: 1rem auto 0;
+			    text-align: center;
+			}
+			.zp img{
+				width: 15.8rem;
+				transform: rotate(22.5deg);
+			}
+			.cj {
+			    position: absolute;
+			    top: 3.5rem;
+			    left: 50%;
+			    margin-left: -4.45rem;
+			}
+			.cj img{
+				/*width: 85%;*/
+			}
+			.sd {
+			    position: relative;
+			    width: 24rem;
+			    margin: -8rem auto 0;
+			    z-index: -2;
+			}
+     	    .chance{
+     	    	margin: 1rem auto;
+    			width: 20rem;
+     	    }
+     	    .chance h3{
+     	    	border: 1px solid #e44025;
+			    width: 15rem;
+			    height: 3rem;
+			    border-radius: 2rem;
+			    line-height: 3rem;
+			    text-align: center;
+			    background-color: #d82828;
+			    margin: 0 auto;
+     	    }
+     	    .chance h3 b{
+     	    	color: #ffb820;
+     	    }
+     	    .list{
+     	    	min-height: 8rem;
+     	    	text-align: left;
+			    color: #ffb820;
+			    background-color: #b21b1b;
+			    padding: 1rem;
+			    line-height: 1.5rem;
+     	    }
+     	    .list ul{
+     	    	list-style: none;
+			    padding: 0;
+			    font-size: 20px;
+			    line-height: 2rem;
+     	    }
+     	    .awards h3{
+     	    	color: #ffb820;
+     	    }
+     	    .awards,.description{
+     	    	text-align: center;
+    			padding: 1rem;
+     	    }
+     	    .description h3{
+     	    	color: #ffb820;
+     	    }
+     	    .content{
+     	    	text-align: left;
+			    color: #ffb820;
+			    background-color: #b21b1b;
+			    padding: 1rem;
+     	    }
+     	    .head{
+     	    	display: flex;;
+     	    	flex-direction: row;
+     	    	justify-content:space-between;
+     	    }
+     	    .head span{
+     	    	display: block;
+			    line-height: 3rem;
+			    color: #ffb820;
+     	    }
+        </style>  
+        <script>
+
+        	$(function(){
+        		$('#cj').rotate({
+        			bind:{
+        				click:function(){
+        					var that  = this;
+        					that.angle = this.angle || 22.5;
+			        		var cycle = 8;
+			        		var step = 45;
+			        		var time = 6000;
+
+        					var random = Math.floor(Math.random()*8);
+
+        					$('#zp').rotate({
+        						angle:that.angle,
+								animateTo:that.angle+360*cycle+step*random,
+								duration:time,
+								easing:$.easing.easeInOutBack,
+								callback:function(){
+									setTimeout(alert($(this).getRotateAngle()),1000);
+									that.angle = $(this).getRotateAngle()[0];
+									var index = Math.floor(that.angle%360/45);
+									console.log(index)
+									// console.log(that.angle,random);
+									switch(true){
+										case index == 0 || index == 1 || index == 3 || index == 5 || index == 6:
+										alert('不好意思,你没有中奖');
+										break;
+										// case 1:
+										// alert('不好意思,你没有中奖');
+										// break;
+										// case 3:
+										// alert('不好意思,你没有中奖');
+										// break;
+										// case 5:
+										// alert('不好意思,你没有中奖');
+										// break;
+										// case 6:
+										// alert('不好意思,你没有中奖');
+										// break;
+										case index = 2:
+										alert('恭喜你,中了二等奖');
+										break;
+										case index = 4:
+										alert('恭喜你,中了一等奖');
+										break;
+										case index = 7:
+										alert('恭喜你,中了三等奖');
+										break;
+									}
+								}
+        					});     					
+        				}
+        			}
+        		});
+        	})
+        </script>
+    </head>  
+    <body>
+    	<h3 class="top">
+    		幸运大抽奖
+    	</h3>
+        <div class="turnplate">
+        	<div class="zp">
+        		<img id="zp" src="./img/turnplate.png" alt="" >
+        	</div>
+        	<div class="cj" id="cj">
+        		<img src="./img/cursor.png" alt="">
+        	</div>
+            <div class="sd">
+            	<img src="./img/shadow.png" alt="">
+            </div>
+        </div>  
+        <div class="chance">
+        	<h3>
+        		您还有 <b id="num">3</b> 次抽奖机会
+        	</h3>
+        </div>
+		<div class="awards">
+			<div class="head">
+				<span>___________________</span>
+				<h3>
+					获奖用户
+				</h3>
+				<span>___________________</span>
+			</div>
+			<div class="list">
+				<ul>
+					<li>
+					手机150****7705的用户获得100元奖励
+				</li>
+				<li>
+					手机150****7705的用户获得100元奖励
+				</li>
+				<li>
+					手机150****7705的用户获得100元奖励
+				</li>
+				</ul>
+			</div>
+		</div>
+		<div class="description">
+			<div class="head">
+				<span>___________________</span>
+				<h3>
+					活动说明
+				</h3>
+				<span>___________________</span>
+			</div>
+			<div class="content">
+				<p>
+					活动时间:10月1日-10月30日
+				</p>
+				<p>
+					每个新用户可以获得3次抽奖机会
+				</p>
+				<p>
+					每日签到或者邀请好友可以获得一次抽奖机会
+				</p>
+			</div>
+		</div>
+    </body>  
+    <script>  
+    
+    </script>  
+</html>  

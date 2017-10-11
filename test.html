@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="./libs/jquery.min.js"></script>
+	<script src="./libs/jQueryRotate.2.2.js"></script>
+	<script src="./libs/jquery.easing.min.js"></script>
+
+</head>
+<body>
+	<div>
+		<img id="img" src="./img/chrome.png" alt="">
+	</div>
+	<script>
+		$(function(){
+			$('#img').rotate({
+				bind:{
+					mouseover:function(){
+						$(this).rotate({
+							angle:0,
+							animateTo:360*6,
+							duration:6000,
+							easing:$.easing.easeInOutBack,
+							callback:function(){
+								setTimeout(alert($(this).getRotateAngle()),1000);
+								console.log($(this));
+							}
+						});
+
+					},
+					mouseout:function(){
+						$(this).rotate({
+							animateTo:0,
+							easing: function(x,t,b,c,d){  
+            							return c*(t/d)+b;  
+        							}  
+						});
+					},
+					click:function(){
+						$(this).stopRotate();
+					}
+				}
+			})
+		})
+	</script>
+</body>
+</html>

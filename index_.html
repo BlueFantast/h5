@@ -1,0 +1,89 @@
+<!DOCTYPE html>  
+<html lang="en">  
+    <head>  
+        <meta charset="utf-8">  
+        <meta name="viewport" content="width=640,user-scalable=no,target-densitydpi = device-dpi " />  
+        <style>  
+        div{  
+            text-align: center;  
+        }  
+        .cj{  
+            z-index: 2;  
+            -webkit-transform:translate3d(0,327px,0);  
+            cursor: pointer;  
+            position: relative;  
+        }  
+        </style>  
+    </head>  
+    <body>  
+        <div class="cj">  
+            <img src="./img/cj.png" alt="">
+        </div>  
+        <div class="jp">  
+            <img src="./img/zp.png" alt="">
+        </div>  
+    </body>  
+    <script>  
+    var cj=document.querySelector(".cj"),  
+        imgs=document.querySelector(".jp").getElementsByTagName("img")[0],  
+        size=0,  
+        Bstop=true,  
+        timer=null;  
+        function startMove(deg,txt){  
+        clearInterval(timer);  
+        timer=setInterval(function(){  
+               Bstop=false;  
+               if(size<9){  
+                  num+=20;  
+                  imgs.style.webkitTransform='rotate('+num+'deg)';  
+                  if(num>=360){  
+                      num=0;  
+                      size++;  
+                  }  
+               }else if(size==9){  
+                  var speed=(deg-num)/20;  
+                      speed=speed>0?Math.ceil(speed):Math.floor(speed);  
+                      num+=speed;  
+                      imgs.style.webkitTransform='rotate('+num+'deg)';  
+                      if(num==deg){  
+                          clearInterval(timer);  
+                          alert(txt);  
+                          Bstop=true;  
+                      }  
+               }  
+           },30)  
+        }  
+        cj.addEventListener("click",function(){  
+            if(Bstop){  
+                num=size=0;  
+                imgs.style.webkitTransform='rotate(0deg)';  
+                var reg=Math.ceil(Math.random()*7);  
+                switch(reg){  
+                    case 1:  
+                        startMove(30,"靠,你居然可以免单4999!");  
+                        break;  
+                    case 2:  
+                        startMove(85,"免单50!");  
+                        break;  
+                    case 3:  
+                        startMove(135,"免单10!");  
+                        break;  
+                    case 4:  
+                        startMove(185,"免单5!");  
+                        break;  
+                    case 5:  
+                        startMove(235,"免服务费!");  
+                        break;  
+                    case 6:  
+                        startMove(285,"提高额度");  
+                        break;  
+                    case 7:  
+                        startMove(337,"不好意思.背时");  
+                        break;  
+                }  
+            }  
+              
+        })  
+  
+    </script>  
+</html>  
