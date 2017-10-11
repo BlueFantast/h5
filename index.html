@@ -13,6 +13,8 @@
      	    body{
      	    	width: 100%;
      	    	background-color: #c72222;
+     	    	margin: 0;
+    			padding: 0;
      	    }
      	    h3{
      	    	color: white;
@@ -31,17 +33,17 @@
 			    text-align: center;
 			}
 			.zp img{
-				width: 15.8rem;
+				width: 17.5rem;
 				transform: rotate(22.5deg);
 			}
 			.cj {
 			    position: absolute;
-			    top: 3.5rem;
+			    top: 3.8rem;
 			    left: 50%;
-			    margin-left: -4.45rem;
+			    margin-left: -4.9rem;
 			}
 			.cj img{
-				/*width: 85%;*/
+				width: 112%;
 			}
 			.sd {
 			    position: relative;
@@ -77,7 +79,7 @@
      	    .list ul{
      	    	list-style: none;
 			    padding: 0;
-			    font-size: 20px;
+			    font-size: 24px;
 			    line-height: 2rem;
      	    }
      	    .awards h3{
@@ -107,69 +109,12 @@
 			    color: #ffb820;
      	    }
         </style>  
-        <script>
-
-        	$(function(){
-        		$('#cj').rotate({
-        			bind:{
-        				click:function(){
-        					var that  = this;
-        					that.angle = this.angle || 22.5;
-			        		var cycle = 8;
-			        		var step = 45;
-			        		var time = 6000;
-
-        					var random = Math.floor(Math.random()*8);
-
-        					$('#zp').rotate({
-        						angle:that.angle,
-								animateTo:that.angle+360*cycle+step*random,
-								duration:time,
-								easing:$.easing.easeInOutBack,
-								callback:function(){
-									setTimeout(alert($(this).getRotateAngle()),1000);
-									that.angle = $(this).getRotateAngle()[0];
-									var index = Math.floor(that.angle%360/45);
-									console.log(index)
-									// console.log(that.angle,random);
-									switch(true){
-										case index == 0 || index == 1 || index == 3 || index == 5 || index == 6:
-										alert('不好意思,你没有中奖');
-										break;
-										// case 1:
-										// alert('不好意思,你没有中奖');
-										// break;
-										// case 3:
-										// alert('不好意思,你没有中奖');
-										// break;
-										// case 5:
-										// alert('不好意思,你没有中奖');
-										// break;
-										// case 6:
-										// alert('不好意思,你没有中奖');
-										// break;
-										case index = 2:
-										alert('恭喜你,中了二等奖');
-										break;
-										case index = 4:
-										alert('恭喜你,中了一等奖');
-										break;
-										case index = 7:
-										alert('恭喜你,中了三等奖');
-										break;
-									}
-								}
-        					});     					
-        				}
-        			}
-        		});
-        	})
-        </script>
     </head>  
     <body>
     	<h3 class="top">
     		幸运大抽奖
     	</h3>
+    	<!-- 抽奖区 -->
         <div class="turnplate">
         	<div class="zp">
         		<img id="zp" src="./img/turnplate.png" alt="" >
@@ -186,6 +131,7 @@
         		您还有 <b id="num">3</b> 次抽奖机会
         	</h3>
         </div>
+        <!-- 获奖信息 -->
 		<div class="awards">
 			<div class="head">
 				<span>___________________</span>
@@ -197,17 +143,18 @@
 			<div class="list">
 				<ul>
 					<li>
-					手机150****7705的用户获得100元奖励
+					恭喜手机号150****7705的用户获得一等奖
 				</li>
 				<li>
-					手机150****7705的用户获得100元奖励
+					恭喜手机号150****7705的用户获得二等奖
 				</li>
 				<li>
-					手机150****7705的用户获得100元奖励
+					恭喜手机号150****7705的用户获得三等奖
 				</li>
 				</ul>
 			</div>
 		</div>
+		<!-- 活动说明 -->
 		<div class="description">
 			<div class="head">
 				<span>___________________</span>
@@ -228,8 +175,218 @@
 				</p>
 			</div>
 		</div>
+		<!-- 获奖反馈 -->
+		<style>
+			.module{
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,.8);
+				text-align: center;
+				z-index: 2;
+				display: none;
+			}
+			.msg{
+				color: white;
+			}
+			.img{
+				margin: 17rem 0 0;
+			}
+		</style>
+		<!-- 模态框 -->
+		<div class="module">
+			
+			<div class="img">
+				<img src="./img/zj.png" alt="">
+			</div>
+			<div class="msg">
+				恭喜你中奖了!
+			</div>
+		</div>
+
+		<!-- 获取用户信息 -->
+		<style>
+			.userinfo{
+				position: fixed;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,.8);
+				text-align: center;
+				z-index: 2;
+				display: none;
+			}
+			.info{
+				margin:10rem auto 0;
+				width: 80%;
+				min-height: 10rem;
+				border-radius: 1rem;
+				background-color: cadetblue;
+				border: 1px solid white;
+				color: white;
+			}
+			.title{
+				margin: 1rem auto;
+				font-weight: 600;
+				font-size: 1.2rem;
+			}
+			.info input{
+				/*height: 1rem;*/
+			    width: 12rem;
+			    font-size: 1rem;
+			    border-radius: .3rem;
+			}
+			.info p{
+				display: flex;
+				flex-direction: row;
+				justify-content: space-evenly;
+			}
+			button#submit {
+			    width: 6rem;
+			    height: 2rem;
+			    font-size: 1rem;
+			    background-color: white;
+			    border-radius: .5rem;
+			}
+		</style>
+		<div class="userinfo">
+			<div class="info">
+				<div class="title">获奖用户信息登记</div>
+				<p class="name">
+					用户名: <input type="text" id="name" placeholder=''  />
+				</p>
+				<p class="phone">
+					手机号: <input type="number" id="phone" placeholder='' maxlength='11' />
+				</p>
+				<p class="qq">
+					QQ号: <input type="number" id="qq" placeholder='' maxlength='11' />
+				</p>
+				<p>
+					<button id="submit">提交</button>
+				</p>
+				<p>
+					关注微信号wei_xin_chenchen了解获奖详情
+				</p>
+				
+			</div>
+		</div>
     </body>  
-    <script>  
-    
-    </script>  
+    <script>
+        	$(function(){
+        		// 清空浏览器存储的用户信息
+        		localStorage.removeItem('userinfo');
+        		// 创建用户信息对象
+	    		var userinfo = {};
+	    		userinfo.award = [];
+        		// 获取抽奖次数
+        		var count = $('#num').text();
+        		$('#cj').rotate({
+        			bind:{
+        				click:function(){
+        					if(count < 1){
+        						alert('你的抽奖次数已用完');
+        						return;
+        					}
+        					count--;
+        					var that  = this;
+        					that.angle = this.angle || 22.5;
+			        		var cycle = 8;
+			        		var step = 45;
+			        		var time = 6000;
+        					// var random = Math.floor(Math.random()*8);
+        					var random = 2;
+
+        					// 执行动画
+        					$('#zp').rotate({
+        						angle:that.angle,
+								animateTo:that.angle+360*cycle+step*random,
+								duration:time,
+								easing:$.easing.easeInOutBack,
+								callback:function(){
+									// 动画执行完毕后回调
+									// setTimeout(alert($(this).getRotateAngle()),1000);
+									that.angle = $(this).getRotateAngle()[0];
+									var index = Math.floor(that.angle%360/45);
+									// console.log(index);
+									$('#num').html(count);
+									// console.log(that.angle,random);
+									switch(true){
+										case index == 0 || index == 1 || index == 3 || index == 5 || index == 6:
+										alert('很遗憾,你没有中奖');
+										break;
+										case index == 2:
+										popup('恭喜你,中了二等奖!');
+										userinfo.award.push('二等奖');
+										break;
+										case index == 4:
+										popup('恭喜你,中了一等奖!');
+										userinfo.award.push('一等奖');
+										break;
+										case index == 7:
+										popup('恭喜你,中了三等奖!');
+										userinfo.award.push('三等奖');
+										break;
+									}
+
+									// 判断当抽奖结束时,如果获奖就弹窗
+		        					if(count==0 && userinfo.award[0]){
+		        						$('.userinfo').fadeIn();
+		        					}
+								}
+        					});
+        					
+        				}
+        			}
+        		});
+        		// 弹窗函数
+        		function popup(text){
+        			$('.module').fadeIn();
+        			$('.msg').html(text);
+        		}
+        		// 隐藏弹窗函数
+        		function hide(obj){
+        			$(obj).fadeOut();
+        		}
+        		// 点击弹窗隐藏
+        		$('.module').on('click',function(){
+        			hide('.module');
+        		})
+
+        		// 点击提交
+	    		$('#submit').click(function(){
+	    			// 写入用户信息
+	    			userinfo.name = $('#name').val();
+	    			userinfo.phone = $('#phone').val();
+	    			userinfo.qq = $('#qq').val();
+	    			if(!userinfo.phone && !userinfo.name &&　!userinfo.qq){
+	    				alert('请填好信息再提交');
+	    				return;
+	    			}
+	    			// 用户信息存入localstorage
+	    			localStorage.setItem('userinfo', JSON.stringify(userinfo));
+	    			// console.log(JSON.parse(localStorage.getItem('userinfo')));
+	    			setTimeout(function(){
+	    				hide('.userinfo');
+	    				writeInfo();
+	    			},500)
+	    		})
+	    		// 读取localstorage信息,写入页面
+	    		function writeInfo(){
+	    			var read = JSON.parse(localStorage.getItem('userinfo'));
+		    		console.log(read["phone"]);
+		    		var phone = read["phone"].slice(0,3)+"****"+read["phone"].slice(-4,read["phone"].length);
+		    		for (var i = 0; i < read["award"].length; i++) {
+		    			$('.list ul').append("<li>恭喜手机号"+phone+"的用户获得"+read["award"][i]+"</li>");
+		    		}
+		    		
+	    		}
+
+	    		
+
+
+
+        	})
+        </script>
+
 </html>  
