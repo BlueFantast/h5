@@ -219,18 +219,21 @@
 				display: none;
 			}
 			.info{
-				margin:10rem auto 0;
-				width: 80%;
-				min-height: 18rem;
-				border-radius: 1rem;
-				background-color: lightseagreen;
-				border: 1px solid white;
-				color: white;
+				margin: 6rem auto 0;
+			    width: 70%;
+			    min-height: 18rem;
+			    border-radius: 1rem;
+			    background-color: lightseagreen;
+			    border: 1px solid white;
+			    color: white;
 			}
 			.title{
-				margin: 1rem auto;
+				margin: 1.5rem auto;
 				font-weight: 600;
 				font-size: 1.5rem;
+			}
+			.info form{
+				line-height: 3rem;
 			}
 			.info input{
 				/*height: 1rem;*/
@@ -239,9 +242,6 @@
 			    border-radius: .3rem;
 			}
 			.info p{
-				display: flex;
-				flex-direction: row;
-				justify-content: space-around;
 				margin: 1.5rem auto;
 				font-size: 1.2rem;
 				line-height: 2rem;
@@ -255,18 +255,18 @@
 		<div class="userinfo">
 			<div class="info">
 				<div class="title">获奖用户信息登记</div>
-				<p class="name">
-					用户名: <input type="text" id="name" placeholder=''  />
-				</p>
-				<p class="phone">
-					手机号: <input type="number" id="phone" placeholder='' maxlength='11' />
-				</p>
-				<p class="qq">
-					QQ号: <input type="number" id="qq" placeholder='' maxlength='11' />
-				</p>
-				<p>
+				<form action="">
+					<label for="name">用户名:&nbsp;</label>&nbsp;
+					<input type="text" id="name" autofocus title="" size="15" maxlength='10' />
+					<br/>
+					<label for="phone">手机号:&nbsp;</label>&nbsp;
+					<input type="tel" id="phone" pattern="[0-9]{11}" autofocus title="输入11位手机号码" maxlength='11' size="15" required />
+					<br/>
+					<label for="qq">QQ号:&nbsp;</label>&nbsp;
+					<input type="tel" id="qq" pattern="[0-9]" autofocus title="输入5-11位qq号码" maxlength='11' size="15" />
+					<br/>
 					<button id="submit">提交</button>
-				</p>
+				</form>
 				<!-- <p>
 					关注微信号wei_xin_chenchen了解获奖详情
 				</p> -->
@@ -281,6 +281,8 @@
         		// 创建用户信息对象
 	    		var userinfo = {};
 	    		userinfo.award = [];
+	    		// 获奖用户信息登记阶段标识
+	    		var registrationPhase = false;
         		// 获取抽奖次数
         		var count = $('#num').text();
         		$('#cj').rotate({
@@ -306,15 +308,15 @@
 								easing:$.easing.easeInOutBack,
 								callback:function(){
 									// 动画执行完毕后回调
-									// setTimeout(alert($(this).getRotateAngle()),1000);
 									that.angle = $(this).getRotateAngle()[0];
 									var index = Math.floor(that.angle%360/45);
 									// console.log(index);
+									if (count==0) {registrationPhase=true;}
 									$('#num').html(count);
-									// console.log(that.angle,random);
 									switch(true){
 										case index == 0 || index == 1 || index == 3 || index == 5 || index == 6:
 										alert('很遗憾,你没有中奖');
+										getInfo();
 										break;
 										case index == 2:
 										popup('恭喜你,中了二等奖!');
@@ -329,18 +331,14 @@
 										userinfo.award.push('三等奖');
 										break;
 									}
-
-									// 判断当抽奖结束时,如果获奖就弹窗
-		        					if(count==0 && userinfo.award[0]){
-		        						$('.userinfo').fadeIn();
-		        					}
+									
 								}
         					});
         					
         				}
         			}
         		});
-        		// 弹窗函数
+        		// 获奖弹窗函数
         		function popup(text){
         			$('.module').fadeIn();
         			$('.msg').html(text);
@@ -349,30 +347,44 @@
         		function hide(obj){
         			$(obj).fadeOut();
         		}
+        		// 抽奖结束弹窗函数
+        		function getInfo(){
+        			if(registrationPhase&&userinfo.award[0]){
+		        		$('.userinfo').fadeIn();
+		        	}
+        		}
+
         		// 点击弹窗隐藏
-        		$('.module').on('click',function(){
+        		$('.module').click(function(){
         			hide('.module');
+        			getInfo();
         		})
 
         		// 点击提交
-	    		$('#submit').click(function(){
+	    		$('#submit').click(function(event){
 	    			// 写入用户信息
 	    			userinfo.name = $('#name').val();
 	    			userinfo.phone = $('#phone').val();
 	    			userinfo.qq = $('#qq').val();
-	    			if(!userinfo.phone && !userinfo.name &&　!userinfo.qq){
+	    			if(!userinfo.phone){
 	    				alert('请填好信息再提交');
 	    				return;
 	    			}
 	    			// 用户信息存入localstorage
 	    			localStorage.setItem('userinfo', JSON.stringify(userinfo));
-	    			// console.log(JSON.parse(localStorage.getItem('userinfo')));
 	    			setTimeout(function(){
 	    				hide('.userinfo');
 	    				writeInfo();
 	    			},500)
+
+	    			// 阻止浏览器默认提交
+	    			var e = event || window.event;
+	    			e.preventDefault();
+	    			window.event.returnValue = false;
+	    			return false;
 	    		})
-	    		// 读取localstorage信息,写入页面
+
+	    		// 读取localstorage信息,写入页面的函数
 	    		function writeInfo(){
 	    			var read = JSON.parse(localStorage.getItem('userinfo'));
 		    		console.log(read["phone"]);
@@ -382,10 +394,6 @@
 		    		}
 		    		
 	    		}
-
-	    		
-
-
 
         	})
         </script>
